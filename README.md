@@ -1,5 +1,7 @@
 # data-structures
 
+## Authors: Sean Beseler and Carlos Cadena
+
 ### Linked List with tests.
 - push(val) will insert the value ‘val’ at the head of the list
 - pop() will pop the first value off the head of the list and return it.
@@ -61,7 +63,7 @@
 - g.breadth_first_traversal(start): Perform a full breadth-first traversal of the graph, beginning at start. Return the full visited path when traversal is complete.
 
 
-##To run tests:
+## To run tests:
 python3 -m venv ENV
 source ENV/bin/activate
 tox
