@@ -141,13 +141,20 @@ def test_pop_prev_node(three_double_list_append):
     assert three_double_list_append.tail.prev_node.val == 2
 
 
-def test_pop_all_list(three_double_list_append):
-    """Test the pop works and the tail and the head is set."""
+def test_pop_all_list_tail(three_double_list_append):
+    """Test the pop works and the tail is set."""
     three_double_list_append.pop()
     three_double_list_append.pop()
     three_double_list_append.pop()
-    assert three_double_list_append.head is None
     assert three_double_list_append.tail is None
+
+
+def test_pop_all_list_head(three_double_list_append):
+        """Test the pop works and the head is set."""
+        three_double_list_append.pop()
+        three_double_list_append.pop()
+        three_double_list_append.pop()
+        assert three_double_list_append.head is None
 
 
 def test_shift_error(empty_double_list):
