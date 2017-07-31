@@ -64,6 +64,7 @@
 
 
 ## To run tests:
-python3 -m venv ENV
-source ENV/bin/activate
-tox
+- python3 -m venv ENV
+- source ENV/bin/activate
+- pip install -e .
+- tox
