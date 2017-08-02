@@ -112,7 +112,7 @@ class Graph(object):
             current_val = to_visit.dequeue()
         return path
 
-     def get_short_path(self, start, end, li):
+    def get_short_path(self, start, end, li):
         """Retrieves shortest path between nodes."""
         path = []
         while True:
@@ -124,13 +124,15 @@ class Graph(object):
 
     def bellman_ford_helper(self, li, start):
         """Bellman-Ford helper, iterates through graph."""
+        temp = {}
         for key in li:
-            for key2 in self.graph[key]:
-                # import pdb; pdb.set_trace()
-                if li[key2[0]][0] > li[key][0] + key2[1] and key2[0] != start:
-                    new_value = li[key][0] + key2[1]
-                    li[key2[0]] = (new_value, key)
-        return li
+            temp[key] = li[key]
+        for key in temp:
+            for key2 in self._graph[key]:
+                if temp[key2[0]][0] > temp[key][0] + key2[1] and key2[0] != start:
+                    new_value = temp[key][0] + key2[1]
+                    temp[key2[0]] = (new_value, key)
+        return temp
 
     def bellman_ford(self, start, end):
         """Implementation of Bellman-Ford algorithm."""
@@ -143,6 +145,7 @@ class Graph(object):
                 li[x] = (float('inf'), 'nan')
         temp_li = self.bellman_ford_helper(li, start)
         while True:
+            temp_li = self.bellman_ford_helper(li, start)
             if temp_li == li:
                 return self.get_short_path(start, end, li)
             li = temp_li
@@ -151,6 +154,7 @@ class Graph(object):
 
     def dijkstra(self, start, end):
         """Implentation of Dijkstra's algorithm."""
+        first_start = start
         nodes = self.nodes()
         nodes.remove(start)
         potential_nodes = {}
@@ -158,23 +162,23 @@ class Graph(object):
             potential_nodes[x] = (float('inf'), 'nan')
         li = {}
         li[start] = (0, start)
-        for x in self.graph[start]:
+        for x in self._graph[start]:
             potential_nodes[x[0]] = (x[1], start)
         while True:
             if len(potential_nodes) == 0:
-                return self.get_short_path(start, end, li)
+                return self.get_short_path(first_start, end, li)
             min_node = float('inf')
             min_node_name = ''
             for x in potential_nodes:
                 if potential_nodes[x][0] < min_node:
                     min_node = potential_nodes[x][0]
                     min_node_name = x
-            for x in self.graph[min_node_name]:
+            for x in self._graph[min_node_name]:
                 if potential_nodes[x[0]][0] > x[1] + min_node:
-                    potential_nodes[x[0]] = (x[1] + min_node, potential_nodes[x[0]][0])
+                    potential_nodes[x[0]] = (x[1] + min_node, min_node_name)
+            start = potential_nodes[min_node_name][1]
             li[min_node_name] = (min_node, start)
-            potential_nodes.remove(min_node_name)
-            start = min_node_name
+            del potential_nodes[min_node_name]
 
 
 if __name__ == '__main__':  # pragma: no cover
