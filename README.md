@@ -1,3 +1,4 @@
+
 # data-structures
 
 ## Authors: Sean Beseler and Carlos Cadena
@@ -68,3 +69,4 @@
 - source ENV/bin/activate
 - pip install -e .
 - tox
+
